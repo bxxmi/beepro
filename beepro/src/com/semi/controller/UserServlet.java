@@ -1,4 +1,4 @@
-package com.testServlet;
+package com.semi.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class test
- */
-@WebServlet("/test")
-public class test extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
+
+
+@WebServlet("/UserServlet")
+public class UserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public test() {
+    public UserServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
