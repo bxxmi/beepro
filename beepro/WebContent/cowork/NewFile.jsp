@@ -4,920 +4,424 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-<script type="text/javascript" src="js/sb-admin-2.min.js"></script>
-<script type="text/javascript">
-	(function(window, document, undefined) {
-
-		var factory = function($, DataTable) {
-			"use strict";
-
-			$('.search-toggle').click(function() {
-				if ($('.hiddensearch').css('display') == 'none')
-					$('.hiddensearch').slideDown();
-				else
-					$('.hiddensearch').slideUp();
-			});
-
-			/* Set the defaults for DataTables initialisation */
-			$.extend(true, DataTable.defaults, {
-				dom : "<'hiddensearch'f'>" + "tr" + "<'table-footer'lip'>",
-				renderer : 'material'
-			});
-
-			/* Default class modification */
-			$.extend(DataTable.ext.classes, {
-				sWrapper : "dataTables_wrapper",
-				sFilterInput : "form-control input-sm",
-				sLengthSelect : "form-control input-sm"
-			});
-
-			/* Bootstrap paging button renderer */
-			DataTable.ext.renderer.pageButton.material = function(settings,
-					host, idx, buttons, page, pages) {
-				var api = new DataTable.Api(settings);
-				var classes = settings.oClasses;
-				var lang = settings.oLanguage.oPaginate;
-				var btnDisplay, btnClass, counter = 0;
-
-				var attach = function(container, buttons) {
-					var i, ien, node, button;
-					var clickHandler = function(e) {
-						e.preventDefault();
-						if (!$(e.currentTarget).hasClass('disabled')) {
-							api.page(e.data.action).draw(false);
-						}
-					};
-
-					for (i = 0, ien = buttons.length; i < ien; i++) {
-						button = buttons[i];
-
-						if ($.isArray(button)) {
-							attach(container, button);
-						} else {
-							btnDisplay = '';
-							btnClass = '';
-
-							switch (button) {
-
-							case 'first':
-								btnDisplay = lang.sFirst;
-								btnClass = button
-										+ (page > 0 ? '' : ' disabled');
-								break;
-
-							case 'previous':
-								btnDisplay = '<i class="material-icons">chevron_left</i>';
-								btnClass = button
-										+ (page > 0 ? '' : ' disabled');
-								break;
-
-							case 'next':
-								btnDisplay = '<i class="material-icons">chevron_right</i>';
-								btnClass = button
-										+ (page < pages - 1 ? '' : ' disabled');
-								break;
-
-							case 'last':
-								btnDisplay = lang.sLast;
-								btnClass = button
-										+ (page < pages - 1 ? '' : ' disabled');
-								break;
-
-							}
-
-							if (btnDisplay) {
-								node = $(
-										'<li>',
-										{
-											'class' : classes.sPageButton + ' '
-													+ btnClass,
-											'id' : idx === 0
-													&& typeof button === 'string' ? settings.sTableId
-													+ '_' + button
-													: null
-										}).append($('<a>', {
-									'href' : '#',
-									'aria-controls' : settings.sTableId,
-									'data-dt-idx' : counter,
-									'tabindex' : settings.iTabIndex
-								}).html(btnDisplay)).appendTo(container);
-
-								settings.oApi._fnBindAction(node, {
-									action : button
-								}, clickHandler);
-
-								counter++;
-							}
-						}
-					}
-				};
-
-				// IE9 throws an 'unknown error' if document.activeElement is used
-				// inside an iframe or frame. 
-				var activeEl;
-
-				try {
-					// Because this approach is destroying and recreating the paging
-					// elements, focus is lost on the select button which is bad for
-					// accessibility. So we want to restore focus once the draw has
-					// completed
-					activeEl = $(document.activeElement).data('dt-idx');
-				} catch (e) {
-				}
-
-				attach($(host).empty()
-						.html('<ul class="material-pagination"/>').children(
-								'ul'), buttons);
-
-				if (activeEl) {
-					$(host).find('[data-dt-idx=' + activeEl + ']').focus();
-				}
-			};
-
-			/*
-			 * TableTools Bootstrap compatibility
-			 * Required TableTools 2.1+
-			 */
-			if (DataTable.TableTools) {
-				// Set the classes that TableTools uses to something suitable for Bootstrap
-				$.extend(true, DataTable.TableTools.classes, {
-					"container" : "DTTT btn-group",
-					"buttons" : {
-						"normal" : "btn btn-default",
-						"disabled" : "disabled"
-					},
-					"collection" : {
-						"container" : "DTTT_dropdown dropdown-menu",
-						"buttons" : {
-							"normal" : "",
-							"disabled" : "disabled"
-						}
-					},
-					"print" : {
-						"info" : "DTTT_print_info"
-					},
-					"select" : {
-						"row" : "active"
-					}
-				});
-
-				// Have the collection use a material compatible drop down
-				$.extend(true, DataTable.TableTools.DEFAULTS.oTags, {
-					"collection" : {
-						"container" : "ul",
-						"button" : "li",
-						"liner" : "a"
-					}
-				});
-			}
-
-		}; // /factory
-
-		// Define as an AMD module if possible
-		if (typeof define === 'function' && define.amd) {
-			define([ 'jquery', 'datatables' ], factory);
-		} else if (typeof exports === 'object') {
-			// Node/CommonJS
-			factory(require('jquery'), require('datatables'));
-		} else if (jQuery) {
-			// Otherwise simply initialise as normal, stopping multiple evaluation
-			factory(jQuery, jQuery.fn.dataTable);
-		}
-
-	})(window, document);
-
-	$(document)
-			.ready(
-					function() {
-						$('#datatable')
-								.dataTable(
-										{
-											"oLanguage" : {
-												"sStripClasses" : "",
-												"sSearch" : "",
-												"sSearchPlaceholder" : "Enter Keywords Here",
-												"sInfo" : "_START_ -_END_ of _TOTAL_",
-												"sLengthMenu" : '<span>Rows per page:</span><select class="browser-default">'
-														+ '<option value="10">10</option>'
-														+ '<option value="20">20</option>'
-														+ '<option value="30">30</option>'
-														+ '<option value="40">40</option>'
-														+ '<option value="50">50</option>'
-														+ '<option value="-1">All</option>'
-														+ '</select></div>'
-											},
-											bAutoWidth : false
-										});
-					});
-</script>
-<title>테이블 테스트</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Order Details Table with Search Filter</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style type="text/css">
-div.material-table {
-	padding: 0;
+body {
+	color: #566787;
+	background: #f5f5f5;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 13px;
 }
 
-div.material-table .hiddensearch {
-	padding: 0 14px 0 24px;
-	border-bottom: solid 1px #DDDDDD;
-	display: none;
+.table-wrapper {
+	background: #fff;
+	padding: 20px 25px;
+	margin: 30px auto;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 
-div.material-table .hiddensearch input {
-	margin: 0;
-	border: transparent 0 !important;
-	height: 48px;
-	color: rgba(0, 0, 0, .84);
+.table-wrapper .btn {
+	float: right;
+	color: #333;
+	background-color: #fff;
+	border-radius: 3px;
+	border: none;
+	outline: none !important;
+	margin-left: 10px;
 }
 
-div.material-table .hiddensearch input:active {
-	border: transparent 0 !important;
+.table-wrapper .btn:hover {
+	color: #333;
+	background: #f2f2f2;
 }
 
-div.material-table table {
-	table-layout: fixed;
+.table-wrapper .btn.btn-primary {
+	color: #fff;
+	background: #03A9F4;
 }
 
-div.material-table .table-header {
-	height: 64px;
-	padding-left: 24px;
-	padding-right: 14px;
-	-webkit-align-items: center;
-	-ms-flex-align: center;
-	align-items: center;
-	display: flex;
-	-webkit-display: flex;
-	border-bottom: solid 1px #DDDDDD;
+.table-wrapper .btn.btn-primary:hover {
+	background: #03a3e7;
 }
 
-div.material-table .table-header .actions {
-	display: -webkit-flex;
-	margin-left: auto;
+.table-title .btn {
+	font-size: 13px;
+	border: none;
 }
 
-div.material-table .table-header .btn-flat {
-	min-width: 36px;
-	padding: 0 8px;
+.table-title .btn i {
+	float: left;
+	font-size: 21px;
+	margin-right: 5px;
 }
 
-div.material-table .table-header input {
-	margin: 0;
-	height: auto;
+.table-title .btn span {
+	float: left;
+	margin-top: 2px;
 }
 
-div.material-table .table-header i {
-	color: rgba(0, 0, 0, 0.54);
+.table-title {
+	color: #fff;
+	background: #4b5366;
+	padding: 16px 25px;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+}
+
+.table-title h2 {
+	margin: 5px 0 0;
 	font-size: 24px;
 }
 
-div.material-table .table-footer {
-	height: 56px;
-	padding-left: 24px;
-	padding-right: 14px;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: row;
-	flex-direction: row;
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
-	-webkit-align-items: center;
-	align-items: center;
-	font-size: 12px !important;
-	color: rgba(0, 0, 0, 0.54);
+.show-entries select.form-control {
+	width: 60px;
+	margin: 0 5px;
 }
 
-div.material-table .table-footer .dataTables_length {
-	display: -webkit-flex;
-	display: flex;
+.table-filter .filter-group {
+	float: right;
+	margin-left: 15px;
 }
 
-div.material-table .table-footer label {
-	font-size: 12px;
-	color: rgba(0, 0, 0, 0.54);
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: row /* works with row or column */
-  
-  flex-direction: row;
-	-webkit-align-items: center;
-	align-items: center;
-	-webkit-justify-content: center;
-	justify-content: center;
+.table-filter input, .table-filter select {
+	height: 34px;
+	border-radius: 3px;
+	border-color: #ddd;
+	box-shadow: none;
 }
 
-div.material-table .table-footer .select-wrapper {
-	display: -webkit-flex;
-	display: flex;
-	-webkit-flex-direction: row /* works with row or column */
-  
-  flex-direction: row;
-	-webkit-align-items: center;
-	align-items: center;
-	-webkit-justify-content: center;
-	justify-content: center;
+.table-filter {
+	padding: 5px 0 15px;
+	border-bottom: 1px solid #e9e9e9;
+	margin-bottom: 5px;
 }
 
-div.material-table .table-footer .dataTables_info, div.material-table .table-footer .dataTables_length
-	{
-	margin-right: 32px;
+.table-filter .btn {
+	height: 34px;
 }
 
-div.material-table .table-footer .material-pagination {
-	display: flex;
-	-webkit-display: flex;
-	margin: 0;
-}
-
-div.material-table .table-footer .material-pagination li:first-child {
-	margin-right: 24px;
-}
-
-div.material-table .table-footer .material-pagination li a {
-	color: rgba(0, 0, 0, 0.54);
-}
-
-div.material-table .table-footer .select-wrapper input.select-dropdown {
-	margin: 0;
-	border-bottom: none;
-	height: auto;
-	line-height: normal;
-	font-size: 12px;
-	width: 40px;
-	text-align: right;
-}
-
-div.material-table .table-footer select {
-	background-color: transparent;
-	width: auto;
-	padding: 0;
-	border: 0;
-	border-radius: 0;
-	height: auto;
-	margin-left: 20px;
-}
-
-div.material-table .table-title {
-	font-size: 20px;
-	color: #000;
-}
-
-div.material-table table tr td {
-	padding: 0 0 0 56px;
-	height: 48px;
-	font-size: 13px;
-	color: rgba(0, 0, 0, 0.87);
-	border-bottom: solid 1px #DDDDDD;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-div.material-table table tr td a {
-	color: inherit;
-}
-
-div.material-table table tr td a i {
-	font-size: 18px;
-	color: rgba(0, 0, 0, 0.54);
-}
-
-div.material-table table tr {
-	font-size: 12px;
-}
-
-div.material-table table th {
-	font-size: 12px;
-	font-weight: 500;
-	color: #757575;
-	cursor: pointer;
-	white-space: nowrap;
-	padding: 0;
-	height: 56px;
-	padding-left: 56px;
-	vertical-align: middle;
-	outline: none !important;
-}
-
-div.material-table table th.sorting_asc, div.material-table table th.sorting_desc
-	{
-	color: rgba(0, 0, 0, 0.87);
-}
-
-div.material-table table th.sorting:after, div.material-table table th.sorting_asc:after,
-	div.material-table table th.sorting_desc:after {
-	font-family: 'Material Icons';
+.table-filter label {
 	font-weight: normal;
-	font-style: normal;
-	font-size: 16px;
-	line-height: 1;
-	letter-spacing: normal;
-	text-transform: none;
+	margin-left: 10px;
+}
+
+.table-filter select, .table-filter input {
 	display: inline-block;
-	word-wrap: normal;
-	-webkit-font-feature-settings: 'liga';
-	-webkit-font-smoothing: antialiased;
-	-webkit-transform: rotate(90deg);
-	display: none;
+	margin-left: 5px;
+}
+
+.table-filter input {
+	width: 200px;
+	display: inline-block;
+}
+
+.filter-group select.form-control {
+	width: 110px;
+}
+
+.filter-icon {
+	float: right;
+	margin-top: 7px;
+}
+
+.filter-icon i {
+	font-size: 18px;
+	opacity: 0.7;
+}
+
+table.table tr th, table.table tr td {
+	border-color: #e9e9e9;
+	padding: 12px 15px;
 	vertical-align: middle;
 }
 
-div.material-table table th.sorting:hover:after, div.material-table table th.sorting_asc:after,
-	div.material-table table th.sorting_desc:after {
+table.table tr th:first-child {
+	width: 60px;
+}
+
+table.table tr th:last-child {
+	width: 80px;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+	background-color: #fcfcfc;
+}
+
+table.table-striped.table-hover tbody tr:hover {
+	background: #f5f5f5;
+}
+
+table.table th i {
+	font-size: 13px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+table.table td a {
+	font-weight: bold;
+	color: #566787;
 	display: inline-block;
+	text-decoration: none;
 }
 
-div.material-table table tbody tr:hover {
-	background-color: #EEE;
+table.table td a:hover {
+	color: #2196F3;
 }
 
-div.material-table table th:first-child, div.material-table table td:first-child
-	{
-	padding: 0 0 0 24px;
+table.table td a.view {
+	width: 30px;
+	height: 30px;
+	color: #2196F3;
+	border: 2px solid;
+	border-radius: 30px;
+	text-align: center;
 }
 
-div.material-table table th:last-child, div.material-table table td:last-child
-	{
-	padding: 0 14px 0 0;
+table.table td a.view i {
+	font-size: 22px;
+	margin: 2px 0 0 1px;
+}
+
+table.table .avatar {
+	border-radius: 50%;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+.status {
+	font-size: 30px;
+	margin: 2px 2px 0 0;
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 10px;
+}
+
+.text-success {
+	color: #10c469;
+}
+
+.text-info {
+	color: #62c9e8;
+}
+
+.text-warning {
+	color: #FFC107;
+}
+
+.text-danger {
+	color: #ff5b5b;
+}
+
+.pagination {
+	float: right;
+	margin: 0 0 5px;
+}
+
+.pagination li a {
+	border: none;
+	font-size: 13px;
+	min-width: 30px;
+	min-height: 30px;
+	color: #999;
+	margin: 0 2px;
+	line-height: 30px;
+	border-radius: 2px !important;
+	text-align: center;
+	padding: 0 6px;
+}
+
+.pagination li a:hover {
+	color: #666;
+}
+
+.pagination li.active a {
+	background: #03A9F4;
+}
+
+.pagination li.active a:hover {
+	background: #0397d6;
+}
+
+.pagination li.disabled i {
+	color: #ccc;
+}
+
+.pagination li i {
+	font-size: 16px;
+	padding-top: 6px
+}
+
+.hint-text {
+	float: left;
+	margin-top: 10px;
+	font-size: 13px;
 }
 </style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 </head>
 <body>
-	<div class="row">
-		<div id="admin" class="col s12">
-			<div class="card material-table">
-				<table id="datatable">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Position</th>
-							<th>Office</th>
-							<th>Age</th>
-							<th>Start date</th>
-							<th>Salary</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
-							<td>61</td>
-							<td>2011/04/25</td>
-							<td>$320,800</td>
-						</tr>
-						<tr>
-							<td>Garrett Winters</td>
-							<td>Accountant</td>
-							<td>Tokyo</td>
-							<td>63</td>
-							<td>2011/07/25</td>
-							<td>$170,750</td>
-						</tr>
-						<tr>
-							<td>Ashton Cox</td>
-							<td>Junior Technical Author</td>
-							<td>San Francisco</td>
-							<td>66</td>
-							<td>2009/01/12</td>
-							<td>$86,000</td>
-						</tr>
-						<tr>
-							<td>Cedric Kelly</td>
-							<td>Senior Javascript Developer</td>
-							<td>Edinburgh</td>
-							<td>22</td>
-							<td>2012/03/29</td>
-							<td>$433,060</td>
-						</tr>
-						<tr>
-							<td>Airi Satou</td>
-							<td>Accountant</td>
-							<td>Tokyo</td>
-							<td>33</td>
-							<td>2008/11/28</td>
-							<td>$162,700</td>
-						</tr>
-						<tr>
-							<td>Brielle Williamson</td>
-							<td>Integration Specialist</td>
-							<td>New York</td>
-							<td>61</td>
-							<td>2012/12/02</td>
-							<td>$372,000</td>
-						</tr>
-						<tr>
-							<td>Herrod Chandler</td>
-							<td>Sales Assistant</td>
-							<td>San Francisco</td>
-							<td>59</td>
-							<td>2012/08/06</td>
-							<td>$137,500</td>
-						</tr>
-						<tr>
-							<td>Rhona Davidson</td>
-							<td>Integration Specialist</td>
-							<td>Tokyo</td>
-							<td>55</td>
-							<td>2010/10/14</td>
-							<td>$327,900</td>
-						</tr>
-						<tr>
-							<td>Colleen Hurst</td>
-							<td>Javascript Developer</td>
-							<td>San Francisco</td>
-							<td>39</td>
-							<td>2009/09/15</td>
-							<td>$205,500</td>
-						</tr>
-						<tr>
-							<td>Sonya Frost</td>
-							<td>Software Engineer</td>
-							<td>Edinburgh</td>
-							<td>23</td>
-							<td>2008/12/13</td>
-							<td>$103,600</td>
-						</tr>
-						<tr>
-							<td>Jena Gaines</td>
-							<td>Office Manager</td>
-							<td>London</td>
-							<td>30</td>
-							<td>2008/12/19</td>
-							<td>$90,560</td>
-						</tr>
-						<tr>
-							<td>Quinn Flynn</td>
-							<td>Support Lead</td>
-							<td>Edinburgh</td>
-							<td>22</td>
-							<td>2013/03/03</td>
-							<td>$342,000</td>
-						</tr>
-						<tr>
-							<td>Charde Marshall</td>
-							<td>Regional Director</td>
-							<td>San Francisco</td>
-							<td>36</td>
-							<td>2008/10/16</td>
-							<td>$470,600</td>
-						</tr>
-						<tr>
-							<td>Haley Kennedy</td>
-							<td>Senior Marketing Designer</td>
-							<td>London</td>
-							<td>43</td>
-							<td>2012/12/18</td>
-							<td>$313,500</td>
-						</tr>
-						<tr>
-							<td>Tatyana Fitzpatrick</td>
-							<td>Regional Director</td>
-							<td>London</td>
-							<td>19</td>
-							<td>2010/03/17</td>
-							<td>$385,750</td>
-						</tr>
-						<tr>
-							<td>Michael Silva</td>
-							<td>Marketing Designer</td>
-							<td>London</td>
-							<td>66</td>
-							<td>2012/11/27</td>
-							<td>$198,500</td>
-						</tr>
-						<tr>
-							<td>Paul Byrd</td>
-							<td>Chief Financial Officer (CFO)</td>
-							<td>New York</td>
-							<td>64</td>
-							<td>2010/06/09</td>
-							<td>$725,000</td>
-						</tr>
-						<tr>
-							<td>Gloria Little</td>
-							<td>Systems Administrator</td>
-							<td>New York</td>
-							<td>59</td>
-							<td>2009/04/10</td>
-							<td>$237,500</td>
-						</tr>
-						<tr>
-							<td>Bradley Greer</td>
-							<td>Software Engineer</td>
-							<td>London</td>
-							<td>41</td>
-							<td>2012/10/13</td>
-							<td>$132,000</td>
-						</tr>
-						<tr>
-							<td>Dai Rios</td>
-							<td>Personnel Lead</td>
-							<td>Edinburgh</td>
-							<td>35</td>
-							<td>2012/09/26</td>
-							<td>$217,500</td>
-						</tr>
-						<tr>
-							<td>Jenette Caldwell</td>
-							<td>Development Lead</td>
-							<td>New York</td>
-							<td>30</td>
-							<td>2011/09/03</td>
-							<td>$345,000</td>
-						</tr>
-						<tr>
-							<td>Yuri Berry</td>
-							<td>Chief Marketing Officer (CMO)</td>
-							<td>New York</td>
-							<td>40</td>
-							<td>2009/06/25</td>
-							<td>$675,000</td>
-						</tr>
-						<tr>
-							<td>Caesar Vance</td>
-							<td>Pre-Sales Support</td>
-							<td>New York</td>
-							<td>21</td>
-							<td>2011/12/12</td>
-							<td>$106,450</td>
-						</tr>
-						<tr>
-							<td>Doris Wilder</td>
-							<td>Sales Assistant</td>
-							<td>Sidney</td>
-							<td>23</td>
-							<td>2010/09/20</td>
-							<td>$85,600</td>
-						</tr>
-						<tr>
-							<td>Angelica Ramos</td>
-							<td>Chief Executive Officer (CEO)</td>
-							<td>London</td>
-							<td>47</td>
-							<td>2009/10/09</td>
-							<td>$1,200,000</td>
-						</tr>
-						<tr>
-							<td>Gavin Joyce</td>
-							<td>Developer</td>
-							<td>Edinburgh</td>
-							<td>42</td>
-							<td>2010/12/22</td>
-							<td>$92,575</td>
-						</tr>
-						<tr>
-							<td>Jennifer Chang</td>
-							<td>Regional Director</td>
-							<td>Singapore</td>
-							<td>28</td>
-							<td>2010/11/14</td>
-							<td>$357,650</td>
-						</tr>
-						<tr>
-							<td>Brenden Wagner</td>
-							<td>Software Engineer</td>
-							<td>San Francisco</td>
-							<td>28</td>
-							<td>2011/06/07</td>
-							<td>$206,850</td>
-						</tr>
-						<tr>
-							<td>Fiona Green</td>
-							<td>Chief Operating Officer (COO)</td>
-							<td>San Francisco</td>
-							<td>48</td>
-							<td>2010/03/11</td>
-							<td>$850,000</td>
-						</tr>
-						<tr>
-							<td>Shou Itou</td>
-							<td>Regional Marketing</td>
-							<td>Tokyo</td>
-							<td>20</td>
-							<td>2011/08/14</td>
-							<td>$163,000</td>
-						</tr>
-						<tr>
-							<td>Michelle House</td>
-							<td>Integration Specialist</td>
-							<td>Sidney</td>
-							<td>37</td>
-							<td>2011/06/02</td>
-							<td>$95,400</td>
-						</tr>
-						<tr>
-							<td>Suki Burks</td>
-							<td>Developer</td>
-							<td>London</td>
-							<td>53</td>
-							<td>2009/10/22</td>
-							<td>$114,500</td>
-						</tr>
-						<tr>
-							<td>Prescott Bartlett</td>
-							<td>Technical Author</td>
-							<td>London</td>
-							<td>27</td>
-							<td>2011/05/07</td>
-							<td>$145,000</td>
-						</tr>
-						<tr>
-							<td>Gavin Cortez</td>
-							<td>Team Leader</td>
-							<td>San Francisco</td>
-							<td>22</td>
-							<td>2008/10/26</td>
-							<td>$235,500</td>
-						</tr>
-						<tr>
-							<td>Martena Mccray</td>
-							<td>Post-Sales support</td>
-							<td>Edinburgh</td>
-							<td>46</td>
-							<td>2011/03/09</td>
-							<td>$324,050</td>
-						</tr>
-						<tr>
-							<td>Unity Butler</td>
-							<td>Marketing Designer</td>
-							<td>San Francisco</td>
-							<td>47</td>
-							<td>2009/12/09</td>
-							<td>$85,675</td>
-						</tr>
-						<tr>
-							<td>Howard Hatfield</td>
-							<td>Office Manager</td>
-							<td>San Francisco</td>
-							<td>51</td>
-							<td>2008/12/16</td>
-							<td>$164,500</td>
-						</tr>
-						<tr>
-							<td>Hope Fuentes</td>
-							<td>Secretary</td>
-							<td>San Francisco</td>
-							<td>41</td>
-							<td>2010/02/12</td>
-							<td>$109,850</td>
-						</tr>
-						<tr>
-							<td>Vivian Harrell</td>
-							<td>Financial Controller</td>
-							<td>San Francisco</td>
-							<td>62</td>
-							<td>2009/02/14</td>
-							<td>$452,500</td>
-						</tr>
-						<tr>
-							<td>Timothy Mooney</td>
-							<td>Office Manager</td>
-							<td>London</td>
-							<td>37</td>
-							<td>2008/12/11</td>
-							<td>$136,200</td>
-						</tr>
-						<tr>
-							<td>Jackson Bradshaw</td>
-							<td>Director</td>
-							<td>New York</td>
-							<td>65</td>
-							<td>2008/09/26</td>
-							<td>$645,750</td>
-						</tr>
-						<tr>
-							<td>Olivia Liang</td>
-							<td>Support Engineer</td>
-							<td>Singapore</td>
-							<td>64</td>
-							<td>2011/02/03</td>
-							<td>$234,500</td>
-						</tr>
-						<tr>
-							<td>Bruno Nash</td>
-							<td>Software Engineer</td>
-							<td>London</td>
-							<td>38</td>
-							<td>2011/05/03</td>
-							<td>$163,500</td>
-						</tr>
-						<tr>
-							<td>Sakura Yamamoto</td>
-							<td>Support Engineer</td>
-							<td>Tokyo</td>
-							<td>37</td>
-							<td>2009/08/19</td>
-							<td>$139,575</td>
-						</tr>
-						<tr>
-							<td>Thor Walton</td>
-							<td>Developer</td>
-							<td>New York</td>
-							<td>61</td>
-							<td>2013/08/11</td>
-							<td>$98,540</td>
-						</tr>
-						<tr>
-							<td>Finn Camacho</td>
-							<td>Support Engineer</td>
-							<td>San Francisco</td>
-							<td>47</td>
-							<td>2009/07/07</td>
-							<td>$87,500</td>
-						</tr>
-						<tr>
-							<td>Serge Baldwin</td>
-							<td>Data Coordinator</td>
-							<td>Singapore</td>
-							<td>64</td>
-							<td>2012/04/09</td>
-							<td>$138,575</td>
-						</tr>
-						<tr>
-							<td>Zenaida Frank</td>
-							<td>Software Engineer</td>
-							<td>New York</td>
-							<td>63</td>
-							<td>2010/01/04</td>
-							<td>$125,250</td>
-						</tr>
-						<tr>
-							<td>Zorita Serrano</td>
-							<td>Software Engineer</td>
-							<td>San Francisco</td>
-							<td>56</td>
-							<td>2012/06/01</td>
-							<td>$115,000</td>
-						</tr>
-						<tr>
-							<td>Jennifer Acosta</td>
-							<td>Junior Javascript Developer</td>
-							<td>Edinburgh</td>
-							<td>43</td>
-							<td>2013/02/01</td>
-							<td>$75,650</td>
-						</tr>
-						<tr>
-							<td>Cara Stevens</td>
-							<td>Sales Assistant</td>
-							<td>New York</td>
-							<td>46</td>
-							<td>2011/12/06</td>
-							<td>$145,600</td>
-						</tr>
-						<tr>
-							<td>Hermione Butler</td>
-							<td>Regional Director</td>
-							<td>London</td>
-							<td>47</td>
-							<td>2011/03/21</td>
-							<td>$356,250</td>
-						</tr>
-						<tr>
-							<td>Lael Greer</td>
-							<td>Systems Administrator</td>
-							<td>London</td>
-							<td>21</td>
-							<td>2009/02/27</td>
-							<td>$103,500</td>
-						</tr>
-						<tr>
-							<td>Jonas Alexander</td>
-							<td>Developer</td>
-							<td>San Francisco</td>
-							<td>30</td>
-							<td>2010/07/14</td>
-							<td>$86,500</td>
-						</tr>
-						<tr>
-							<td>Shad Decker</td>
-							<td>Regional Director</td>
-							<td>Edinburgh</td>
-							<td>51</td>
-							<td>2008/11/13</td>
-							<td>$183,000</td>
-						</tr>
-						<tr>
-							<td>Michael Bruce</td>
-							<td>Javascript Developer</td>
-							<td>Singapore</td>
-							<td>29</td>
-							<td>2011/06/27</td>
-							<td>$183,000</td>
-						</tr>
-						<tr>
-							<td>Donna Snider</td>
-							<td>Customer Support</td>
-							<td>New York</td>
-							<td>27</td>
-							<td>2011/01/25</td>
-							<td>$112,000</td>
-						</tr>
-					</tbody>
-				</table>
+	<div class="container">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-4">
+						<h2>
+							Order <b>Details</b>
+						</h2>
+					</div>
+					<div class="col-sm-8">
+						<a href="#" class="btn btn-primary"><i class="material-icons">&#xE863;</i>
+							<span>Refresh List</span></a> <a href="#" class="btn btn-info"><i
+							class="material-icons">&#xE24D;</i> <span>Export to Excel</span></a>
+					</div>
+				</div>
+			</div>
+			<div class="table-filter">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="show-entries">
+							<span>Show</span> <select class="form-control">
+								<option>5</option>
+								<option>10</option>
+								<option>15</option>
+								<option>20</option>
+							</select> <span>entries</span>
+						</div>
+					</div>
+					<div class="col-sm-9">
+						<button type="button" class="btn btn-primary">
+							<i class="fa fa-search"></i>
+						</button>
+						<div class="filter-group">
+							<label>Name</label> <input type="text" class="form-control">
+						</div>
+						<div class="filter-group">
+							<label>Location</label> <select class="form-control">
+								<option>All</option>
+								<option>Berlin</option>
+								<option>London</option>
+								<option>Madrid</option>
+								<option>New York</option>
+								<option>Paris</option>
+							</select>
+						</div>
+						<div class="filter-group">
+							<label>Status</label> <select class="form-control">
+								<option>Any</option>
+								<option>Delivered</option>
+								<option>Shipped</option>
+								<option>Pending</option>
+								<option>Cancelled</option>
+							</select>
+						</div>
+						<span class="filter-icon"><i class="fa fa-filter"></i></span>
+					</div>
+				</div>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Customer</th>
+						<th>Location</th>
+						<th>Order Date</th>
+						<th>Status</th>
+						<th>Net Amount</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td><a href="#"><img src="/examples/images/avatar/1.jpg"
+								class="avatar" alt="Avatar"> Michael Holz</a></td>
+						<td>London</td>
+						<td>Jun 15, 2017</td>
+						<td><span class="status text-success">&bull;</span> Delivered</td>
+						<td>$254</td>
+						<td><a href="#" class="view" title="View Details"
+							data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><a href="#"><img src="/examples/images/avatar/2.jpg"
+								class="avatar" alt="Avatar"> Paula Wilson</a></td>
+						<td>Madrid</td>
+						<td>Jun 21, 2017</td>
+						<td><span class="status text-info">&bull;</span> Shipped</td>
+						<td>$1,260</td>
+						<td><a href="#" class="view" title="View Details"
+							data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><a href="#"><img src="/examples/images/avatar/3.jpg"
+								class="avatar" alt="Avatar"> Antonio Moreno</a></td>
+						<td>Berlin</td>
+						<td>Jul 04, 2017</td>
+						<td><span class="status text-danger">&bull;</span> Cancelled</td>
+						<td>$350</td>
+						<td><a href="#" class="view" title="View Details"
+							data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><a href="#"><img src="/examples/images/avatar/4.jpg"
+								class="avatar" alt="Avatar"> Mary Saveley</a></td>
+						<td>New York</td>
+						<td>Jul 16, 2017</td>
+						<td><span class="status text-warning">&bull;</span> Pending</td>
+						<td>$1,572</td>
+						<td><a href="#" class="view" title="View Details"
+							data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><a href="#"><img src="/examples/images/avatar/5.jpg"
+								class="avatar" alt="Avatar"> Martin Sommer</a></td>
+						<td>Paris</td>
+						<td>Aug 04, 2017</td>
+						<td><span class="status text-success">&bull;</span> Delivered</td>
+						<td>$580</td>
+						<td><a href="#" class="view" title="View Details"
+							data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="clearfix">
+				<div class="hint-text">
+					Showing <b>5</b> out of <b>25</b> entries
+				</div>
+				<ul class="pagination">
+					<li class="page-item disabled"><a href="#">Previous</a></li>
+					<li class="page-item"><a href="#" class="page-link">1</a></li>
+					<li class="page-item"><a href="#" class="page-link">2</a></li>
+					<li class="page-item"><a href="#" class="page-link">3</a></li>
+					<li class="page-item active"><a href="#" class="page-link">4</a></li>
+					<li class="page-item"><a href="#" class="page-link">5</a></li>
+					<li class="page-item"><a href="#" class="page-link">6</a></li>
+					<li class="page-item"><a href="#" class="page-link">7</a></li>
+					<li class="page-item"><a href="#" class="page-link">Next</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
