@@ -65,9 +65,9 @@
   <section class="bg-light page-section">
     <div class="container">
         
-        <div class="row">
+        <div class="row" >
           <div class="col-3">
-              <div class="chk-block">
+              <div class="chk-block" style="margin-top:50px">
                   search
                   <hr>
                   <input type="checkbox"> test<br>
@@ -77,8 +77,9 @@
               </div>
           </div>
           <div class="col-9">
+            <div class="row" style="float:right; "><button onclick="location.href='projectWriting.jsp'" type="button" class="col-1-4 btn btn-primary" style="width:200px; height:35px;">글쓰기</button></div>
               <!-- 게시물 -->
-              <div class="row post-card">
+              <div class="row post-card" style="margin-top:50px">
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-11 col-sm-10">
