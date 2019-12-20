@@ -4,10 +4,6 @@ package com.semi.vo;
 
 import java.sql.Date;
 
-/**
- * @author yaans
- *
- */
 public class TodoVo {
 	private int todoSeq;		// 업무 번호
 	private int projectSeq;	// 프로젝트 번호
@@ -22,7 +18,6 @@ public class TodoVo {
 	
 	public TodoVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public TodoVo(int todoSeq, int projectSeq, String title, String content, String manager, Date startDate,
