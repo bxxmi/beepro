@@ -57,7 +57,7 @@ document.getElementById('currentDatetime').value= new Date().toISOString().slice
 
 <!-- 이슈만들기 모달창 -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;">
-      <a href="#"><b>+&nbsp;&nbsp;이슈 생성하기</b></a>
+      <a href="../issue?command=issueWrite"><b>+&nbsp;&nbsp;이슈 생성하기</b></a>
   </button>
 
 <!-- Modal -->
@@ -74,7 +74,7 @@ document.getElementById('currentDatetime').value= new Date().toISOString().slice
       </div>
       
       <div class="modal-body">
-        <form action="issue.do" method="post">
+        <form action="issue" method="post">
           
           <div style="margin-top:10px;">
           <p id="title">이슈 이름<span style="color:red;"> *</span></p>
