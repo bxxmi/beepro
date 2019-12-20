@@ -18,6 +18,6 @@
   
   <servlet-mapping>
      <servlet-name>issue</servlet-name>
-     <url-pattern>/issue.do</url-pattern>
+     <url-pattern>/issue</url-pattern>
   </servlet-mapping>
 </web-app>
