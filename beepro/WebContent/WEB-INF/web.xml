@@ -20,4 +20,15 @@
      <servlet-name>issue</servlet-name>
      <url-pattern>/issue.do</url-pattern>
   </servlet-mapping>
+  
+  <!-- todo 매핑 -->
+  <servlet>
+     <servlet-name>todo</servlet-name>
+     <servlet-class>com.semi.controller.ProjectServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+     <servlet-name>todo</servlet-name>
+     <url-pattern>/todo/*</url-pattern>
+  </servlet-mapping>
 </web-app>
