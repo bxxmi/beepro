@@ -56,8 +56,9 @@ document.getElementById('currentDatetime').value= new Date().toISOString().slice
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 <!-- 이슈만들기 모달창 -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;">
-      <a href="../issue?command=issueWrite"><b>+&nbsp;&nbsp;이슈 생성하기</b></a>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;"
+     onclick="location.href='../issue?command=issueWrite'">
+      <b>+&nbsp;&nbsp;이슈 생성하기</b>
   </button>
 
 <!-- Modal -->

@@ -24,7 +24,6 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#headers").load("common/side_bar.jsp");
-		$("#top_bar").load("common/top_bar.jsp");
 		$("#footer").load("common/footer.html")
 	});
 
@@ -323,8 +322,8 @@ table.table .avatar {
 			<div id="content">
 
 				<!-- 왼쪽 메뉴 바 -->
-				<div id="top_bar"></div>
-
+				<!-- <div id="top_bar"></div> -->
+				<jsp:include page="common/top_bar.jsp"></jsp:include>
 				<!-- 본격적으로 내용이 담기는 div -->
 				<div class="container-fluid">
 					<div class="container">
