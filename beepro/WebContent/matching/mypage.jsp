@@ -87,29 +87,66 @@
 				<button class="btn btn-primary" data-toggle="modal" data-target="#updatePwd" style="margin-top: 40px;"> 비밀번호 변경</button>
 			</div>
 			<div class="col-12">
+				<span> area </span>
+				<select class="pf_input">
+					<option>------ 선택하지 않음 ------</option>
+					<option>서울</option>
+					<option>경기도</option>
+					<option>충청도</option>
+				</select>
+			</div>
+			
+			<div class="col-12">
 				<span>skills</span>
 				<div class="card">
 				    <div class="card-body">
+				    <fieldset>
+				    	<legend>front-end</legend>
 					    <div class="form-check form-check-inline">
 						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-						  <label class="form-check-label" for="inlineCheckbox1">1</label>
+						  <label class="form-check-label" for="inlineCheckbox1">HTML</label>
 						</div>
 						<div class="form-check form-check-inline">
 						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-						  <label class="form-check-label" for="inlineCheckbox2">2</label>
+						  <label class="form-check-label" for="inlineCheckbox2">CSS</label>
 						</div>
 						<div class="form-check form-check-inline">
 						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-						  <label class="form-check-label" for="inlineCheckbox1">1</label>
+						  <label class="form-check-label" for="inlineCheckbox1">JavaScript</label>
 						</div>
 						<div class="form-check form-check-inline">
 						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-						  <label class="form-check-label" for="inlineCheckbox2">2</label>
+						  <label class="form-check-label" for="inlineCheckbox2">Augularjs</label>
 						</div>
 						<div class="form-check form-check-inline">
 						  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
-						  <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+						  <label class="form-check-label" for="inlineCheckbox3">React</label>
 						</div>
+				    </fieldset>
+				    <hr>
+				    <fieldset>
+				    	<legend>back-end</legend>
+					    <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">Java</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">Python</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">Nodejs</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">Spring</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+						  <label class="form-check-label" for="inlineCheckbox3">C++ (disabled)</label>
+						</div>
+				    </fieldset>
 				    </div>
 				    <button class="btn btn-primary">수정</button>
 				</div>
