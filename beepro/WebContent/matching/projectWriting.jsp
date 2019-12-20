@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
 <script src="js/plugins/tagEditor/jquery.caret.min.js"></script>
 <script src="js/plugins/tagEditor/jquery.tag-editor.js"></script>
-
 <script type="text/javascript">
    (function($) {
       function floatLabel(inputType) {
