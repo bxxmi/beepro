@@ -49,12 +49,16 @@ a:hover { text-decoration:none;
                  color:white; }
 
 </style>
+<script type="text/javascript">
+document.getElementById('currentDatetime').value= new Date().toISOString().slice(0, 16);
+</script>
 <!-- 탑 메뉴 -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 <!-- 이슈만들기 모달창 -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;">
-      <a href="issue.do?command=write"><b>+&nbsp;&nbsp;이슈 생성하기</b></a>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;"
+     onclick="location.href='../issue?command=issueWrite'">
+      <b>+&nbsp;&nbsp;이슈 생성하기</b>
   </button>
 
 <!-- Modal -->
@@ -71,7 +75,7 @@ a:hover { text-decoration:none;
       </div>
       
       <div class="modal-body">
-        <form action="issue.do" method="post">
+        <form action="issue" method="post">
           
           <div style="margin-top:10px;">
           <p id="title">이슈 이름<span style="color:red;"> *</span></p>
@@ -120,7 +124,7 @@ a:hover { text-decoration:none;
               
               <div id="box2" style="margin-left:80px;">
                 <p id="title" style="margin-top:20px;">기간</p>
-                <input type="text" name="writer" size="45">
+                <input type="datetime-local" id='currentDatetime'/>
               </div>
         </form>
       </div>

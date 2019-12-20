@@ -1,5 +1,5 @@
 package com.semi.service;
 
-public class userService {
+public class UserService {
 
 }
