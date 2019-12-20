@@ -41,13 +41,23 @@ select {width: 300px;
        margin-left:52px; }
 
 #title { font-size:14px; color:black; font-weight:bold;}
+
+button a { text-decoration:none; 
+           color:white;}
+           
+a:hover { text-decoration:none; 
+                 color:white; }
+
 </style>
+<script type="text/javascript">
+document.getElementById('currentDatetime').value= new Date().toISOString().slice(0, 16);
+</script>
 <!-- 탑 메뉴 -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 <!-- 이슈만들기 모달창 -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="margin-left:850px;">
-      <b>+&nbsp;&nbsp;이슈 생성하기</b>
+      <a href="#"><b>+&nbsp;&nbsp;이슈 생성하기</b></a>
   </button>
 
 <!-- Modal -->
@@ -55,14 +65,16 @@ select {width: 300px;
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="width:900px; height:730px; margin-left:-200px;">
       <div class="modal-header" style="background-color:rgba(75,97,207);">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:white;"><b>이슈 생성하기</b></h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;">
+           <b>이슈 생성하기</b>
+         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" style="color:white;">&times;</span>
         </button>
       </div>
       
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="issue.do" method="post">
           
           <div style="margin-top:10px;">
           <p id="title">이슈 이름<span style="color:red;"> *</span></p>
@@ -111,7 +123,7 @@ select {width: 300px;
               
               <div id="box2" style="margin-left:80px;">
                 <p id="title" style="margin-top:20px;">기간</p>
-                <input type="text" name="writer" size="45">
+                <input type="datetime-local" id='currentDatetime'/>
               </div>
         </form>
       </div>

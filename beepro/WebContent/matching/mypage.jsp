@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -33,43 +31,31 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
 .profile-bd{
-    background: linear-gradient(to bottom, rgba(75,97,207) 50%, white 0%); 
+  background: linear-gradient(to bottom, rgba(75,97,207) 50%, white 0%); 
 }
-input {
-   background-color: #eee;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
+.pf_input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  /* text-align: center; */
 }
-#pf-status li {
-	width:30%;
-	text-align: center;
-	display: inline-block;
-	border-right: 2px dotted rgba(75,97,207);
-}
-#pf-status li:last-child {
-	border: none;
-}
-a:hover {
-	 text-decoration:none;
-}
-hr {
-	margin: 3em 0;
+.form-check-inline {
+    margin-right: 1.75rem;
 }
 </style>
 </head>
 
 <body id="page-top">
-
   <jsp:include page="common/sub_nav.jsp"></jsp:include>
-  
+
   <!-- Header -->
   <header class="masthead" style="background-color: rgba(75,97,207);">
     <div class="container">
       <div class="intro-text" style="padding-top: 150px; padding-bottom: 100px;">
-        <div class="intro-lead-in">test's</div>
-        <div class="intro-heading text-uppercase">profile</div>
+        <div class="intro-lead-in">by project</div>
+        <div class="intro-heading text-uppercase">MyPage</div>
       </div>
     </div>
   </header>
@@ -83,92 +69,213 @@ hr {
       </div>
     </div>    
   </div>
-  <div class="container" style="padding: 40px 0;">
-  	<div id="pf-status">
-  		<ul>
-  			<li>
-  				<span>참여 프로젝트</span>
-  				<h3>123</h3>
-  			</li>
-  			<li>
-  				<span> followers</span>
-				<h3>
-					<a href="#">
-						<i class="fa-heart" style="font-family: fontawesome;content:'\f004';font-style: normal;"></i> 
-					</a>
-					1
-				</h3>
-  			</li>
-  			<li>
-				<span> following</span>
-				<h3>
-					<a href="#">
-						<i class="fa-heart" style="font-family: fontawesome;content:'\f004';font-style: normal;"></i> 
-					</a>
-					1
-				</h3>
-  			</li>
-  		</ul>
-  	</div>
-  	<hr>
-  	<div class="row">
-  		<div class="col-2">
-  		</div>
-  		<div class="col-8">
-		  	<p class="bg-light" style="text-align:center;">
-				skills
-			</p>
-  		</div>
-  	</div>
-  </div>
-  <section>
-    	<div class="container">
-    		<h5>참여 프로젝트 </h5>
-    		<div class="row">
-    			<div class="col-lg-12">
-		    		<table class="table">
-					  <thead class="thead-light">
+	<div class="container" style="padding: 40px 0;">
+		<div class="row">
+			<div class="col-12">
+				<span> name </span>
+				<input type="email" value="이름" class="pf_input" readonly/>
+			</div>
+			<div class="col-12">
+				<span> email </span>
+				<input type="email" value="email@google.com" class="pf_input" readonly/>
+			</div>
+			<div class="col-8">
+				<span> password </span>
+				<input type="password" value="own pwd"  class="pf_input"/>
+			</div>
+			<div class="col-4">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#updatePwd" style="margin-top: 40px;"> 비밀번호 변경</button>
+			</div>
+			<div class="col-12">
+				<span> area </span>
+				<select class="pf_input">
+					<option>------ 선택하지 않음 ------</option>
+					<option>서울</option>
+					<option>경기도</option>
+					<option>충청도</option>
+				</select>
+			</div>
+			
+			<div class="col-12">
+				<span>skills</span>
+				<div class="card">
+				    <div class="card-body">
+				    <fieldset>
+				    	<legend>front-end</legend>
+					    <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">HTML</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">CSS</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">JavaScript</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">Augularjs</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+						  <label class="form-check-label" for="inlineCheckbox3">React</label>
+						</div>
+				    </fieldset>
+				    <hr>
+				    <fieldset>
+				    	<legend>back-end</legend>
+					    <div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">Java</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">Python</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+						  <label class="form-check-label" for="inlineCheckbox1">Nodejs</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+						  <label class="form-check-label" for="inlineCheckbox2">Spring</label>
+						</div>
+						<div class="form-check form-check-inline">
+						  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+						  <label class="form-check-label" for="inlineCheckbox3">C++ (disabled)</label>
+						</div>
+				    </fieldset>
+				    </div>
+				    <button class="btn btn-primary">수정</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>	<!-- container end -->
+	<section>
+		<div class="container">
+			<h5>게시글</h5>
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="card">
+					  <div class="card-body">
+					    <h5 class="card-title">개발자 구합니다</h5>
+					    <h6 class="card-subtitle mb-2 text-muted">username</h6>
+					    <p class="card-text">기획, 디자이너, 프론트앤드, 백앤드 개발자 구합니다</p>
+					    <a href="#" class="card-link">자세히보기</a>
+					    
+					  </div>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="card">
+					  <div class="card-body">
+					    <h5 class="card-title">개발자 구합니다 2222</h5>
+					    <h6 class="card-subtitle mb-2 text-muted">username</h6>
+					    <p class="card-text">기획, 디자이너, 프론트앤드, 백앤드 개발자 구합니다 222</p>
+					    <a href="#" class="card-link">자세히보기</a>
+					    
+					  </div>
+					</div>
+				</div>
+			</div>		<!-- 게시글 end -->
+			<hr style="margin:3em 0;">
+			 <h5>관심 유저목록</h5>
+			 <div class="row">
+				 <div class="col-lg-6 col-sm-5">
+				 	<table class="table table-sm table-hover">
+					  <thead>
 					    <tr>
 					      <th scope="col"></th>
-					      <th scope="col">프로젝트명</th>
-					      <th scope="col">개발 기간</th>
-					      <th scope="col">등급? or 역할</th>
+					      <th scope="col">followers</th>
 					    </tr>
 					  </thead>
 					  <tbody>
 					    <tr>
 					      <th scope="row">1</th>
-					      <td>Mark</td>
-					      <td>Otto</td>
-					      <td>@mdo</td>
+					      <td>yans</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">2</th>
-					      <td>Jacob</td>
-					      <td>Thornton</td>
-					      <td>@fat</td>
+					      <td>hyeingg</td>
 					    </tr>
 					    <tr>
 					      <th scope="row">3</th>
-					      <td>Larry</td>
-					      <td>the Bird</td>
-					      <td>@twitter</td>
+					      <td>tuna</td>
 					    </tr>
 					  </tbody>
 					</table>
-    			</div>
-    		</div>
-    		
-    		<hr>
-    		
-			<h5>프로젝트 참여율 (67/123)</h5>
-    		<div class="progress">
-			  <div class="progress-bar bg-success" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="123"></div>
-			</div>
-    	</div>
-    </section>
+				 </div>
+				 
+				 <div class="col-lg-6 col-sm-5">
+				 	<table class="table table-sm table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col"></th>
+					      <th scope="col">following</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">1</th>
+					      <td>pomi</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">2</th>
+					      <td>gymin</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">3</th>
+					      <td>edie</td>
+					    </tr>
+					  </tbody>
+					</table>
+				 </div>
+			 </div> <!-- 관심목록 end -->			 
+		</div>
+	</section>
+	
   <jsp:include page="common/footer.jsp"></jsp:include>
 
+<!-- 비밀번호 변경 모달 -->
+<div class="modal fade" id="updatePwd" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatePwdLabel">패스워드 변경</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+	<form action="updatePwdForm">
+      <div class="modal-body">
+      
+        	  <div class="form-group">
+			    <label for="oriPwd">기존 패스워드</label>
+			    <input type="password" class="form-control" id="oriPwd" required>
+			  </div>
+			  <hr>
+			  <div class="form-group">
+			    <label for="newPwd">새 패스워드</label>
+			    <input type="password" class="form-control" id="newPwd" required>
+			  </div>
+			  <div class="form-group">
+			    <label for="newPwd_chk">새 패스워드 확인</label>
+			    <input type="password" class="form-control" id="newPwd_chk" required aria-describedby="pwdinfo">
+			    <small id="pwdinfo" class="form-text text-muted">위와 같게 입력해주시기 바랍니다</small>
+			  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="submit" class="btn btn-primary">변경</button>
+      </div>
+	</form>
+    </div>
+  </div>
+</div>
+<!-- 비밀번호 변경 모달 end--> 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -182,5 +289,4 @@ hr {
 </body>
 
 </html>
-    
     
