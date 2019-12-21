@@ -24,6 +24,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#headers").load("common/side_bar.jsp");
+		$("#top_bar").load("common/top_bar.jsp");
 		$("#footer").load("common/footer.html")
 	});
 
@@ -69,7 +70,7 @@ to {
 	border-radius: 5px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
-
+/* 
 .table-wrapper .btn {
 	float: right;
 	color: #333;
@@ -84,15 +85,15 @@ to {
 	color: #333;
 	background: #f2f2f2;
 }
-
-.table-wrapper .btn.btn-primary {
+ */
+/* .table-wrapper .btn.btn-primary {
 	color: #fff;
-	background: #03A9F4;
+	background: rgba(75,97,207);
 }
 
 .table-wrapper .btn.btn-primary:hover {
 	background: #03a3e7;
-}
+} */
 
 .table-title .btn {
 	font-size: 13px;
@@ -308,7 +309,7 @@ table.table .avatar {
 }
 
 </style>
-<title>이슈 관리</title>
+<title>내 업무</title>
 </head>
 <body>
 	<div id="wrapper">
@@ -322,8 +323,8 @@ table.table .avatar {
 			<div id="content">
 
 				<!-- 왼쪽 메뉴 바 -->
-				<!-- <div id="top_bar"></div> -->
-				<jsp:include page="common/top_bar.jsp"></jsp:include>
+				<div id="top_bar"></div>
+
 				<!-- 본격적으로 내용이 담기는 div -->
 				<div class="container-fluid">
 					<div class="container">
@@ -331,23 +332,23 @@ table.table .avatar {
 							<div class="row">
 								<div class="col-sm-4">
 									<h2>
-										<b>이슈 목록</b>
+										<b>내 업무</b>
 									</h2>
 								</div>
 							</div>
 						</div>
-						<div class="filter-group col-sm-4">
-						   <input type="text" class="form-control" size="50" style="border:0;" placeholder="검색하실 항목을 입력하세요">
-						</div>
+							<div class="filter-group col-4">
+							   <input type="text" class="form-control" size="50" style="border:0;" placeholder="검색하실 항목을 입력하세요">
+							</div>
                           
-                         <div style="float:left; margin-left:360px; margin-top:-37.5px;"> 
-                          <button type="button" class="btn btn-primary">
-							  <i class="fa fa-search"></i>
-						    </button>
-                         </div>
+	                         <div style="float:left; margin-left:360px; margin-top:-37.5px;"> 
+	                          <button type="button" class="btn btn-primary">
+								  <i class="fa fa-search"></i>
+							    </button>
+	                         </div>
                          
 						<div class="table-wrapper">
-						  							<div class="table-filter">
+  							<div class="table-filter">
 								<div class="row">
 									<div class="col-sm-3">
 										<div class="show-entries">
@@ -360,6 +361,12 @@ table.table .avatar {
 										</div>
 									</div>
 									<div class="col-sm-9">
+										<div class="filter-group">
+											<button class="btn btn-primary">업무 추가</button>
+											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal">
+											  Launch demo modal
+											</button>
+										</div>
 										<div class="filter-group">
 											<label>중요도</label><select class="form-control">
 												<option>선택</option>
@@ -379,60 +386,38 @@ table.table .avatar {
 											</select>
 										</div>
 							             <span class="filter-icon"><i class="fa fa-filter"></i></span>
+							             
 									</div>
 								</div>
 							</div>
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
-										<th>NO</th>
-										<th>작성자</th>
-										<th>작성 날짜</th>
+										<th>no</th>
+										<th>업무명</th>
+										<th>업무 내용</th>
+										<th>담당자</th>
 										<th>중요도</th>
-										<th>이슈타입</th>
-										<th>자세히</th>
+										<th>시작</th>
+										<th>마감</th>
+										<th>진행정도</th>
+										<!-- 진행정도에서 100%이 되면 업무 종료 확인 DB 값 -->
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td>1</td>
-										<td>Michael Holz</td>
-										<td>London</td>
+										<td>업무명</td>
+										<td>업무 내용</td>
+										<td>담당자</td>
 										<td><span class="status text-success">&bull;</span>
 											Delivered</td>
-										<td>$254</td>
-										<td><a href="#" class="view" title="View Details"
-											data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
+										<td>업무 시작</td>
+										<td>업무 종료</td>
+										<td><span class="status text-success">&bull;</span>
+											Delivered</td>
 									</tr>
-									<tr>
-										<td>2</td>
-										<td>Paula Wilson</td>
-										<td>Madrid</td>
-										<td><span class="status text-info">&bull;</span> Shipped</td>
-										<td>$1,260</td>
-										<td><a href="#" class="view" title="View Details"
-											data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>Antonio Moreno</td>
-										<td>Berlin</td>
-										<td><span class="status text-danger">&bull;</span>
-											Cancelled</td>
-										<td>$350</td>
-										<td><a href="#" class="view" title="View Details"
-											data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-									</tr>
-									<tr>
-										<td>4</td>
-										<td>Mary Saveley</td>
-										<td>New York</td>
-										<td><span class="status text-warning">&bull;</span>
-											Pending</td>
-										<td>$1,572</td>
-										<td><a href="#" class="view" title="View Details"
-											data-toggle="tooltip"><i class="material-icons">&#xE5C8;</i></a></td>
-									</tr>
+									
 								</tbody>
 							</table>
 							<div class="clearfix">
@@ -457,7 +442,25 @@ table.table .avatar {
 			</div>
 			<!-- 푸터 -->
 			<div id="footer"></div>
-
+<div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 		</div>
 	</div>
 </body>

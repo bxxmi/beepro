@@ -51,7 +51,7 @@ button { background-color:#4b61cf;
     
           <!-- Nav Item - Charts -->
           <li class="nav-item">
-            <a class="nav-link" href="myjob.jsp">
+            <a class="nav-link" href="todo.jsp">
               <i class="fas fa-fw fa-chart-area"></i>
               <span>내업무</span></a>
           </li>
