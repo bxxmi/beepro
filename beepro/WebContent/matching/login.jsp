@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter"%>    
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -247,12 +249,13 @@ window.onload = function(){
         container.classList.remove("right-panel-active");
     });
 }
+
 </script>
 </head>
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form method="post" action="./registerAction.jsp">
                 <h1>Create Account</h1>
                 <div class="social-container">
 						<span>카카오톡 / 구글 계정으로 회원가입</span>
@@ -261,15 +264,15 @@ window.onload = function(){
 						<a href="#" class="social"><img src="img/google.png" style="width: 35px; border-radius: 20px;"></a>
 					</div>
                 <span>BEEPRO 계정 회원가입</span>
-                <input type="email" placeholder="Email" />
-                <input type="text" placeholder="Name" />                
-                <input type="password" placeholder="Password" />
-                <input type="password" placeholder="Password check" />
+                <input type="email" name ="u_email" placeholder="Email" />
+                <input type="text" name="u_name" placeholder="Name" />                
+                <input type="password" name="u_pwd1" placeholder="Password" />
+                <input type="password" name="u_pwd2" placeholder="Password check" />
                 <button class="btn btn-primary" onclick="location.href='index.jsp'">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form method="post" action="./loginAction.jsp">
 				<h1>Sign in</h1>
                 <div class="social-container">
 					<span>카카오톡 / 구글 계정으로 로그인</span>
@@ -280,11 +283,11 @@ window.onload = function(){
                 </div>
 				
 				<span>BEEPRO 계정으로 로그인</span>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <input type="email" name ="u_email" placeholder="Email" />
+                <input type="password" name="u_pwd" placeholder="Password" />
                 <a href="#">Forgot your password?</a>
 				
-                <button class="btn btn-primary">Sign In</button>
+                <button class="btn btn-primary"onclick="location.href='index.jsp'">Sign In</button>
 				
             </form>
         </div>
