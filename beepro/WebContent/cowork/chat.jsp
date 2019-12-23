@@ -16,9 +16,9 @@
 <link href="css/custom.css" rel="stylesheet">
 
 <%
-	String u_id = "";
+	String u_id = null;
 	if (session.getAttribute("u_id") != null) {
-
+		u_id = (String)session.getAttribute("u_id");
 	}
 
 	String get_id = null;
