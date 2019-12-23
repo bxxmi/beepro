@@ -91,10 +91,8 @@ public class ProjectServlet extends HttpServlet {
 			} else {
 				System.out.println("생성 오류 발생");
 			}
-			}
-			
->>>>>>> e2841bcdb3888ce842fdd46df0968f9a55c5e756
+
 		}
-	
+	}
 
 }
