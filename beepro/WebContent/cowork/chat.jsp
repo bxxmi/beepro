@@ -1,29 +1,72 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
+<%
+	response.setContentType("text/html; charset=UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>chat</title>
+
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/custom.css" rel="stylesheet">
+
+<%
+	String u_id = "";
+	if (session.getAttribute("u_id") != null) {
+
+	}
+
+	String get_id = null;
+	if (request.getAttribute("get_id") != null) {
+		get_id = (String) request.getParameter("get_id");
+	}
+%>
+<script type="text/javascript" src ="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-	
+function autoClosingAlert(selector,delay){
+	var alert = $(selector);
+	alert.show();
+	window.setTimeout(function(){ alert.hide() }, delay);
+}
+//메세지를 보내는 함수
+function sumbitFunction(){
+	var send_id = "<%=u_id%>";	
+	var get_id = "<%=get_id%>";   
+		var chatContent = $('#chatContent').val();
+		$.ajax({
+			type : "POST",
+			url : "../chat?command=submit",
+			data : {
+				send_id : encodeURIComponent(send_id),
+				get_id : encodeURIComponent(get_id),
+				chatContent : encodeURIComponent(chatContent),
+			},
+			success : function(result) {
+				if (result == 1) {
+
+					autoClosingAlert('#successMessage', 2000);
+					//alert("메시지 전송에 성공했습니다.");
+				} else if (result == 0) {
+					autoClosingAlert('#dangerMessage', 2000);
+					//alert("이름과 내용을 모두 입력해주세요.");
+				} else {
+					autoClosingAlert('#warningMessage', 2000);
+					//alert("데이터베이스 오류가 발생했습니다.");
+				}
+			}
+		});
+		$('#chatContent').val(''); /* 성공적으로 보내지면 값을 비워준다 */
+
+	}
 </script>
 </head>
 <body>
-	<%
-		String userSeq = null;
-		if(session.getAttribute("userSeq")!=null){
-			
-		}
-		
-		String getPerson = null;
-		if(request.getAttribute("getPerson") != null){
-			getPerson = (String) request.getParameter("getPerson");
-		}
-	
-	%>	
+
 
 	<div class="container">
 		<div class="col-md-12 col-lg-6">
@@ -197,7 +240,7 @@
 						<div class="row">
 							<div class="col-xs-9">
 								<!-- <input type="text" placeholder="Enter your text" class="form-control chat-input" > -->
-								<textarea style="height: 80px; resize: none;"
+								<textarea id="chatContent" style="height: 80px; resize: none;"
 									class="form-control chat-input" placeholder="메세지를 입력하세요."
 									maxlength="100"></textarea>
 							</div>
@@ -215,6 +258,9 @@
 	<div class="alert alert-success" id="successMessage"
 		style="display: none;">
 		<strong>메세지 전송에 성공했습니다.</strong>
+	</div>
+	<div id="dangerMessage" style="display: none;">
+		<strong>이름과 내용을 모두 입력해주세요.</strong>
 	</div>
 	<div class="alert alert-success" id="warningMessage"
 		style="display: none;">

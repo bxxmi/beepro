@@ -57,7 +57,7 @@ $(document).ready( function() {
          <div class="row">
 
 
-		<iframe src="chat.jsp" width="1280" height="560px" frameborder="0">
+		<iframe src="chat.jsp" width="1280px" height="580px" frameborder="0">
 		
 		</iframe>
 
