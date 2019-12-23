@@ -320,9 +320,7 @@ table.table .avatar {
 
 			<!-- 메인 내용이 들어갈 구역을 정의하는 div -->
 			<div id="content">
-
 				<!-- 왼쪽 메뉴 바 -->
-				<!-- <div id="top_bar"></div> -->
 				<jsp:include page="common/top_bar.jsp"></jsp:include>
 				<!-- 본격적으로 내용이 담기는 div -->
 				<div class="container-fluid">
@@ -347,7 +345,7 @@ table.table .avatar {
                          </div>
                          
 						<div class="table-wrapper">
-						  							<div class="table-filter">
+						    <div class="table-filter">
 								<div class="row">
 									<div class="col-sm-3">
 										<div class="show-entries">

@@ -37,7 +37,7 @@ button { background-color:#4b61cf;
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="issue.jsp">
+            <a class="nav-link" href="issueList.jsp">
               <i class="fas fa-fw fa-wrench"></i>
               <span>이슈관리</span>
             </a>

@@ -28,12 +28,6 @@ public class ProjectServlet extends HttpServlet {
 		dual(request, response);
 	}
 	
-	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		RequestDispatcher dispatch = request.getRequestDispatcher(url);
-		dispatch.forward(request, response);
-	}
-	
 	private void dual(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/**
@@ -50,24 +44,28 @@ public class ProjectServlet extends HttpServlet {
 		// 구조 변경으로 인해 service단으로 코드 이동 필요 **
 		
 		String command = request.getParameter("command");
-		
+		System.out.println("[" + command + "]");
 		// 서비스와 연결
 		ProjectService projectService = null;
 		
-		if(command.equals("issueWrite")) {
-			System.out.println("이슈 쓰기 요청");
-			projectService.issueWrite(request,response);
-		
-		} else if(command.equals("issueDelete")) {
+		 if(command.equals("issueWrite")) {
+		  System.out.println("이슈 생성");
+		  projectService = new ProjectService();
+		  projectService.issueWrite(request, response);
+			
+		}	else if(command.equals("issueDelete")) {
 			System.out.println("이슈 삭제 요청");
+			projectService = new ProjectService();
 			projectService.issueDelete(request,response);
 		
 		} else if(command.equals("issueAll")) {
 			System.out.println("이슈 전체 보기");
+			projectService = new ProjectService();
 			projectService.issueAll(request,response);
 			
 		} else if(command.equals("issueDetail")) {
 			System.out.println("선택한 하나의 이슈의 정보 자세히");
+			projectService = new ProjectService();
 			projectService.issueDetail(request,response);
 		}
 	}
