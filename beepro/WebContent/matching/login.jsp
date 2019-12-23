@@ -264,6 +264,7 @@ window.onload = function(){
 						<a href="#" class="social"><img src="img/google.png" style="width: 35px; border-radius: 20px;"></a>
 					</div>
                 <span>BEEPRO 계정 회원가입</span>
+                <input type="text" name ="u_id" placeholder="ID" />
                 <input type="email" name ="u_email" placeholder="Email" />
                 <input type="text" name="u_name" placeholder="Name" />                
                 <input type="password" name="u_pwd1" placeholder="Password" />
@@ -283,7 +284,7 @@ window.onload = function(){
                 </div>
 				
 				<span>BEEPRO 계정으로 로그인</span>
-                <input type="email" name ="u_email" placeholder="Email" />
+                <input type="text" name ="u_id" placeholder="ID" />
                 <input type="password" name="u_pwd" placeholder="Password" />
                 <a href="#">Forgot your password?</a>
 				
