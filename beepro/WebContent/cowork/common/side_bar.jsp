@@ -51,7 +51,7 @@ button { background-color:#4b61cf;
     
           <!-- Nav Item - Charts -->
           <li class="nav-item">
-            <a class="nav-link" href="todo.jsp">
+            <a class="nav-link" href="../todo?command=todo-list">
               <i class="fas fa-fw fa-chart-area"></i>
               <span>내업무</span></a>
           </li>
@@ -59,7 +59,7 @@ button { background-color:#4b61cf;
            <li>
            <!-- 구성원 Modal -->
            <button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="group_member">
-               <img src="images/person_icon.png" width="38" height="40">
+               <img src="/beepro/cowork/images/person_icon.png" width="38" height="40">
            </button>
 
          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
