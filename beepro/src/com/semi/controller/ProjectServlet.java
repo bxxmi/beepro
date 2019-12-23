@@ -1,6 +1,7 @@
 package com.semi.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.semi.service.ProjectService;
+import com.semi.vo.TodoVo;
 
 @WebServlet("/ProjectServlet")
 public class ProjectServlet extends HttpServlet {
@@ -21,15 +23,24 @@ public class ProjectServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		dual(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		
 		dual(request, response);
 	}
 	
+	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatch = request.getRequestDispatcher(url);
+		dispatch.forward(request, response);
+	}
 	private void dual(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		/**
 		 * dual method : get, post 방식으로 들어온 요청을 둘다 받는다
 		 * 			   : 구분값 설정 필요 (hidden값(예: command) or url/(추가 url로 구분 문자열 예: userservlet/login의 login)) 
@@ -37,16 +48,10 @@ public class ProjectServlet extends HttpServlet {
 		 *  방식 예시
 		 *	https://github.com/jaewookleeee/semi/blob/master/src/com/semi/controller/Controller.java#L44
 		 *  */
-		
-		// 구조 변경으로 인해 service단으로 코드 이동 필요 **
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		// 구조 변경으로 인해 service단으로 코드 이동 필요 **
-		
 		String command = request.getParameter("command");
 		System.out.println("[" + command + "]");
 		// 서비스와 연결
-		ProjectService projectService = null;
+		ProjectService projectService = new ProjectService();
 		
 		 if(command.equals("issueWrite")) {
 		  System.out.println("이슈 생성");
@@ -67,7 +72,29 @@ public class ProjectServlet extends HttpServlet {
 			System.out.println("선택한 하나의 이슈의 정보 자세히");
 			projectService = new ProjectService();
 			projectService.issueDetail(request,response);
+			
+		} else if(command.equals("todo-list")) {
+			System.out.println("업무 리스트 출력");
+			// index.jsp 에서 project, id 에 세션 요구됨
+			List<TodoVo> todoList = projectService.selectAllTodo(1, "매니저 or 아이디");
+			
+			request.setAttribute("todoList", todoList);
+			dispatch("cowork/todo.jsp", request, response);
+			
+		} else if(command.equals("todoForm")) {
+			System.out.println("새 업무 생성");
+			int success = projectService.insertTodo(request, response);
+			
+			if(success>0) {
+				System.out.println("성공적으로 생성");
+				dispatch("../cowork/todo.jsp", request, response);
+			} else {
+				System.out.println("생성 오류 발생");
+			}
+			}
+			
+>>>>>>> e2841bcdb3888ce842fdd46df0968f9a55c5e756
 		}
-	}
+	
 
 }

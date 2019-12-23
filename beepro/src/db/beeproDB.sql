@@ -12,7 +12,7 @@ DROP TABLE project_member;
 
 DROP SEQUENCE ISSUE_SEQ;
 DROP SEQUENCE PROJECT_SEQ;
-
+DROP SEQUENCE TODO_SEQ;
 
 --location, skill 컬럼은 not null 제약조건 안걸어 둠
 
@@ -38,8 +38,13 @@ CREATE SEQUENCE PROJECT_SEQ
   MINVALUE 1
   NOCYCLE;
 
-
-
+-- 추가
+CREATE SEQUENCE TODO_SEQ
+	START WITH 1
+	INCREMENT BY 1
+	MAXVALUE 10000
+	MINVALUE 1
+	NOCYCLE;
 
 CREATE TABLE beepro_user (
     user_id varchar2(100)	PRIMARY KEY,
@@ -105,7 +110,7 @@ CREATE TABLE comments (
 	regdate	Date	NOT NULL
 );
 
-
+-- 진행상태, 우선순위 (중요도) 추가
 CREATE TABLE todo (
 	todo_seq	number	NOT NULL,
 	project_seq	number	NOT NULL,
@@ -115,10 +120,12 @@ CREATE TABLE todo (
 	startdate	Date	NOT NULL,
 	enddate	Date	NOT NULL,
 	category	varchar2(200)	NOT NULL,
+	progress	varchar2(200)	NOT NULL,
+	priority	number NOT NULL,
 	finish_ck	varchar2(6)	NOT NULL,
 	CONSTRAINT finish_ck_chk CHECK(finish_ck IN('Y','N'))
 );
-
+select * from todo;
 
 CREATE TABLE project (
 	project_seq	number	PRIMARY KEY,
@@ -208,7 +215,3 @@ ALTER TABLE project_member ADD CONSTRAINT FK_project_TO_project_mem FOREIGN KEY 
 ALTER TABLE project_member ADD CONSTRAINT FK_user_TO_project_mem FOREIGN KEY (member_id) REFERENCES beepro_user (user_id);
 
 COMMIT;
-
-
-
-

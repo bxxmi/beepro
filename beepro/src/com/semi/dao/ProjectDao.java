@@ -3,6 +3,7 @@ package com.semi.dao;
 import java.util.List;
 
 import com.semi.vo.IssueVo;
+import com.semi.vo.TodoVo;
 
 public interface ProjectDao {
 	// 이슈부분
@@ -11,6 +12,9 @@ public interface ProjectDao {
     String deleteIssueSql = "DELETE FROM ISSUE WHERE ISSUE_SEQ=?";
     String selectAllIssueSql = "SELECT * FROM ISSUE ORDER BY ISSUE_SEQ DESC"; 
     String selectOneIssueSql = "SELECT * FROM ISSUE WHERE ISSUE_SEQ=?";
+    
+    String insertTodoSql = "INSERT INTO TODO VALUES(TODO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'N')";
+    String selectAllTodoSql = "SELECT * FROM TODO WHERE MANAGER = ? AND PROJECT_SEQ = ?";
     
     public List<IssueVo> selectAllIssue();
     
@@ -21,5 +25,9 @@ public interface ProjectDao {
     public boolean updateIssue(IssueVo vo);
     
     public boolean deleteIssue(int issue_seq);
+    
+    public int insertTodo(TodoVo todo);
+
+	public List<TodoVo> selectAllTodo(int project_seq, String manager);
 }
 

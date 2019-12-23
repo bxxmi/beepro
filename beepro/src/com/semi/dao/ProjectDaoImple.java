@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.semi.vo.IssueVo;
+import com.semi.vo.TodoVo;
 
 import static common.JDBCTemplet.*;
 
@@ -69,5 +70,77 @@ public class ProjectDaoImple implements ProjectDao {
 	public boolean deleteIssue(int issue_seq) {
 		return false;
 	}
+	
+	// 업무 생성
+	@Override
+	public int insertTodo(TodoVo todo) {
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		int res = 0;
+		try {
+			pstm = con.prepareStatement(insertTodoSql);
+			pstm.setInt(1, todo.getProjectSeq());
+			pstm.setString(2, todo.getManager());
+			pstm.setString(3, todo.getTitle());
+			pstm.setString(4, todo.getContent());
+			pstm.setDate(5, todo.getStartDate());
+			pstm.setDate(6, todo.getEndDate());
+			pstm.setString(7, todo.getCategory());
+			pstm.setString(8, "시작");
+			pstm.setInt(9, todo.getPriority());
+			
+			res = pstm.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
+	// 업무 리스트 출력
+	@Override
+	public List<TodoVo> selectAllTodo(int project_seq, String manager) {
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<TodoVo> res = new ArrayList<TodoVo>();
+		
+		try {
+			pstm = con.prepareStatement(selectAllTodoSql);
+			pstm.setString(1, manager);
+			pstm.setInt(2, project_seq);
+			
+			rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				TodoVo todo = new TodoVo();
+				
+				todo.setTodoSeq(rs.getInt(1));
+				todo.setProjectSeq(rs.getInt(2));
+				todo.setManager(rs.getString(3));
+				todo.setTitle(rs.getString(4));
+				todo.setContent(rs.getString(5));
+				todo.setStartDate(rs.getDate(6));
+				todo.setEndDate(rs.getDate(7));
+				todo.setCategory(rs.getString(8));
+				todo.setProgress(rs.getString(9));
+				todo.setPriority(rs.getInt(10));
+				todo.setFinishCk(rs.getString(11));
+				
+				System.out.println(todo.toString());
+				
+				res.add(todo);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstm);
+			close(con);
+			System.out.println("5. db종료");
+		}
+		return res;
+	}	
 
 }

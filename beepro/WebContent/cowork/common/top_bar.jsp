@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <meta charset="UTF-8">
+
 <style>
 option { border-right:1px solid #ccc; } 
 
@@ -49,9 +50,6 @@ a:hover { text-decoration:none;
                  color:white; }
 
 </style>
-<script type="text/javascript">
-document.getElementById('currentDatetime').value= new Date().toISOString().slice(0, 16);
-</script>
 <!-- 탑 메뉴 -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
