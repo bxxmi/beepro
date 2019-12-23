@@ -7,23 +7,23 @@ import java.sql.Date;
 public class TodoVo {
 	private int todoSeq;		// 업무 번호
 	private int projectSeq;	// 프로젝트 번호
+	private String manager;		// 댬당자
 	private String title;		// 업무 제목 
 	private String content;		// 업무 내용
-	private String manager;		// 댬당자
 	private Date startDate;		// 업무 시작 날짜
 	private Date endDate;		// 업무 종료 날짜
 	private String category;	// 업무 분류(디자인, 백, 프론트)
+	private String progress; 	// 진행 상태 *
+	private int priority;		// 우선순위, 중요도 *
 	private String finishCk;	// 업무 종료 확인
-	private String progress; 	// 진행상황
 	
 	public TodoVo() {
 		super();
 	}
-
-	public TodoVo(int todoSeq, int projectSeq, String title, String content, String manager, Date startDate,
-			Date endDate, String category, String finishCk, String progress) {
+	
+	public TodoVo(int projectSeq, String title, String content, String manager, Date startDate,
+			Date endDate, String category, int priority) {
 		super();
-		this.todoSeq = todoSeq;
 		this.projectSeq = projectSeq;
 		this.title = title;
 		this.content = content;
@@ -31,8 +31,23 @@ public class TodoVo {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.category = category;
-		this.finishCk = finishCk;
+		this.priority = priority;
+	}
+
+	public TodoVo(int todoSeq, int projectSeq, String manager, String title, String content, Date startDate,
+			Date endDate, String category, String progress, int priority, String finishCk) {
+		super();
+		this.todoSeq = todoSeq;
+		this.projectSeq = projectSeq;
+		this.manager = manager;
+		this.title = title;
+		this.content = content;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.category = category;
 		this.progress = progress;
+		this.priority = priority;
+		this.finishCk = finishCk;
 	}
 
 	public int getTodoSeq() {
@@ -115,11 +130,19 @@ public class TodoVo {
 		this.progress = progress;
 	}
 
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
 	@Override
 	public String toString() {
 		return "TodoVo [todoSeq=" + todoSeq + ", projectSeq=" + projectSeq + ", title=" + title + ", content=" + content
 				+ ", manager=" + manager + ", startDate=" + startDate + ", endDate=" + endDate + ", category="
-				+ category + ", finishCk=" + finishCk + ", progress=" + progress + "]";
+				+ category + ", finishCk=" + finishCk + ", progress=" + progress + ", priority=" + priority + "]";
 	}
 	
 	

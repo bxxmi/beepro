@@ -1,32 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/cowork/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/cowork/css/sb-admin-2.min.css" rel="stylesheet">
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/cowork/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/cowork/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/cowork/vendor/jquery-easing/jquery.easing.min.js"></script>
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+<script src="${pageContext.request.contextPath}/cowork/js/sb-admin-2.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#headers").load("common/side_bar.jsp");
-		$("#top_bar").load("common/top_bar.jsp");
-		$("#footer").load("common/footer.html")
-	});
+	$(function() {
+    	$( "radio" ).click(function() {
+      	
+      	$("Label").css( "color", red );
+    	});
+ 	});
 
 	jQuery(function($) {
 		$(".container-fluid").css("display", "none");
@@ -308,13 +309,49 @@ table.table .avatar {
 	font-size: 13px;
 }
 
+.rate {
+    float: left;
+    height: 46px;
+    /* padding: 0 10px; */
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+/* .rate > input:checked ~ label {
+    color: #ffc700;    
+} */
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) x> label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
 </style>
-<title>내 업무</title>
+<title>내 업무 </title>
 </head>
 <body>
 	<div id="wrapper">
 		<!-- 상단 메뉴 바 -->
-		<div id="headers"></div>
+		<!-- <div id="headers"></div> -->
+		<jsp:include page="common/side_bar.jsp"></jsp:include>
 
 		<!-- 내용이 들어갈 구역을 정의하는 div -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -323,7 +360,8 @@ table.table .avatar {
 			<div id="content">
 
 				<!-- 왼쪽 메뉴 바 -->
-				<div id="top_bar"></div>
+				<!-- <div id="top_bar"></div> -->
+				<jsp:include page="common/top_bar.jsp"></jsp:include>
 
 				<!-- 본격적으로 내용이 담기는 div -->
 				<div class="container-fluid">
@@ -362,10 +400,10 @@ table.table .avatar {
 									</div>
 									<div class="col-sm-9">
 										<div class="filter-group">
-											<button class="btn btn-primary">업무 추가</button>
-											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal">
+											<button class="btn btn-primary" onclick="location.href='todoForm.jsp'">업무 추가</button>
+											<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal">
 											  Launch demo modal
-											</button>
+											</button> -->
 										</div>
 										<div class="filter-group">
 											<label>중요도</label><select class="form-control">
@@ -391,6 +429,15 @@ table.table .avatar {
 								</div>
 							</div>
 							<table class="table table-striped table-hover">
+								<colgroup>
+									<col width="5%">
+									<col width="10%">
+									<col width="20%">
+									<col width="10%">
+									<col width="15%">
+									<col width="15%">
+									<col width="10%">
+								</colgroup>
 								<thead>
 									<tr>
 										<th>no</th>
@@ -398,25 +445,48 @@ table.table .avatar {
 										<th>업무 내용</th>
 										<th>담당자</th>
 										<th>중요도</th>
-										<th>시작</th>
-										<th>마감</th>
-										<th>진행정도</th>
+										<th>타임라인</th>
+										<!-- <th>마감</th> -->
+										<th>상태</th>
 										<!-- 진행정도에서 100%이 되면 업무 종료 확인 DB 값 -->
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach var="todo" items="${todoList}" >
 									<tr>
-										<td>1</td>
-										<td>업무명</td>
-										<td>업무 내용</td>
-										<td>담당자</td>
-										<td><span class="status text-success">&bull;</span>
-											Delivered</td>
-										<td>업무 시작</td>
-										<td>업무 종료</td>
-										<td><span class="status text-success">&bull;</span>
-											Delivered</td>
+											
+										<td>
+											${todo.todoSeq}
+										</td>
+										<td>${todo.title }</td>
+										<td>${todo.content }</td>
+										<td>${todo.manager }</td>
+										<td>
+											<div class="rate">
+											<!-- id="star-rate" --> 
+											    <input type="radio" name="rate${todo.todoSeq}" value="5" checked/>
+											    <label for="star5" title="text">5 stars</label>
+											    <input type="radio" id="star4" name="rate${todo.todoSeq}" value="4" />
+											    <label for="star4" title="text">4 stars</label>
+											    <input type="radio" id="star3" name="rate${todo.todoSeq}" value="3" />
+											    <label for="star3" title="text">3 stars</label>
+											    <input type="radio" id="star2" name="rate${todo.todoSeq}" value="2" />
+											    <label for="star2" title="text">2 stars</label>
+											    <input type="radio" id="star1" name="rate${todo.todoSeq}" value="1" />
+											    <label for="star1" title="text">1 star</label>
+											 </div>
+										</td>
+										<td>
+										<div class="progress">
+										  <div class="progress-bar bg-info" role="progressbar" style="width: <%=100%>%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">${todo.endDate}</div>
+										</div>
+										</td>
+										<!-- <td>업무 종료</td> -->
+										<td>
+											${todo.progress }
+										</td>
 									</tr>
+									</c:forEach>
 									
 								</tbody>
 							</table>
@@ -441,7 +511,7 @@ table.table .avatar {
 				</div>
 			</div>
 			<!-- 푸터 -->
-			<div id="footer"></div>
+			<jsp:include page="common/footer.html"></jsp:include>
 <div class="modal fade" id="todoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
