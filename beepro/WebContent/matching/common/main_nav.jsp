@@ -4,6 +4,17 @@
 	main_nav : section 장점 info <li> 추가 & ** 일단은 가장 우측 메뉴 login.jsp로 이어짐 
 	sub_nav : 가장 우측 메뉴 profile.jsp 로 이어짐
  -->
+<%@ page import="java.io.PrintWriter"%>
+
+<%@ page import="com.semi.dao.UserDaoImpl"%>
+<% //로그인 상태일때 로그인 세션 유지하는 부분
+   String u_id = null;
+
+	if(session.getAttribute("u_id") != null) {
+		u_id = (String) session.getAttribute("u_id");
+	} 
+	
+%> 
 <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
@@ -28,11 +39,25 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#cowork">협업 cowork</a>
           </li>
+
           <li class="nav-item" style="margin-top: 10px;">
+          <%
+		if(u_id == null) {
+		%> 
             <button type="button" class="btn btn-primary btn-sm" onclick="location.href='login.jsp'">
               login
             </button>
+         <% } else { 
+         %> 
+          	<button type="button" class="btn btn-primary btn-sm" onclick="location.href='userLogout.jsp'">
+             logout
+            </button> 
+            
+         <%	} %>
           </li>
+
+
+         
         </ul>
       </div>
     </div>
