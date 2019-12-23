@@ -210,7 +210,3 @@ ALTER TABLE project_member ADD CONSTRAINT FK_project_TO_project_mem FOREIGN KEY 
 ALTER TABLE project_member ADD CONSTRAINT FK_user_TO_project_mem FOREIGN KEY (member_id) REFERENCES beepro_user (user_id);
 
 COMMIT;
-
-
-
-

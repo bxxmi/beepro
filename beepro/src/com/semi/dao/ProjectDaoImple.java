@@ -11,24 +11,41 @@ import java.util.List;
 
 import com.semi.vo.IssueVo;
 
-public class ProjectDaoImple implements ProjectDao{
+import static common.JDBCTemplet.*;
+
+public class ProjectDaoImple implements ProjectDao {
 
 	// 이슈 생성
 	@Override
 	public boolean insertIssue(IssueVo vo) {
 		Connection con = getConnection();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<IssueVo> res = new ArrayList<IssueVo>();
-		
+		int res = 0;
+
 		try {
 			pstmt = con.prepareStatement(insertIssueSql);
+			pstmt.setInt(1, vo.getIssueSeq());
+			pstmt.setInt(2, vo.getProjectSeq());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getWriter());
+			pstmt.setString(5, vo.getLevel());
+			pstmt.setDate(6, vo.getRegdate());
+			pstmt.setString(7, vo.getCategory());
+			pstmt.setString(8, vo.getContent());
+
+			res = pstmt.executeUpdate();
+
+			if (res > 0) {
+				commit(con);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt, con);
 		}
-		return false;
+		return (res > 0) ? true : false;
 	}
-	
+
 	// 전체 이슈 조회
 	@Override
 	public List<IssueVo> selectAllIssue() {
