@@ -40,7 +40,6 @@ public class ProjectServlet extends HttpServlet {
 		RequestDispatcher dispatch = request.getRequestDispatcher(url);
 		dispatch.forward(request, response);
 	}
-	
 	private void dual(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/**
 		 * dual method : get, post 방식으로 들어온 요청을 둘다 받는다
@@ -50,45 +49,51 @@ public class ProjectServlet extends HttpServlet {
 		 *	https://github.com/jaewookleeee/semi/blob/master/src/com/semi/controller/Controller.java#L44
 		 *  */
 		String command = request.getParameter("command");
-		
+		System.out.println("[" + command + "]");
 		// 서비스와 연결
 		ProjectService projectService = new ProjectService();
-			if(command.equals("issueWrite")) {
-				System.out.println("이슈 쓰기 요청");
-				projectService.issueWrite(request,response);
-				
-			} else if(command.equals("issueDelete")) {
-				System.out.println("이슈 삭제 요청");
-				projectService.issueDelete(request,response);
-				
-			} else if(command.equals("issueAll")) {
-				System.out.println("이슈 전체 보기");
-				projectService.issueAll(request,response);
-				
-			} else if(command.equals("issueDetail")) {
-				System.out.println("선택한 하나의 이슈의 정보 자세히");
-				projectService.issueDetail(request,response);
-				
-			} else if(command.equals("todo-list")) {
-				System.out.println("업무 리스트 출력");
-				// index.jsp 에서 project, id 에 세션 요구됨
-				List<TodoVo> todoList = projectService.selectAllTodo(1, "매니저 or 아이디");
-				
-				request.setAttribute("todoList", todoList);
-				dispatch("cowork/todo.jsp", request, response);
-				
-			} else if(command.equals("todoForm")) {
-				System.out.println("새 업무 생성");
-				int success = projectService.insertTodo(request, response);
-				
-				if(success>0) {
-					System.out.println("성공적으로 생성");
-					dispatch("../cowork/todo.jsp", request, response);
-				} else {
-					System.out.println("생성 오류 발생");
-				}
+		
+		 if(command.equals("issueWrite")) {
+		  System.out.println("이슈 생성");
+		  projectService = new ProjectService();
+		  projectService.issueWrite(request, response);
+			
+		}	else if(command.equals("issueDelete")) {
+			System.out.println("이슈 삭제 요청");
+			projectService = new ProjectService();
+			projectService.issueDelete(request,response);
+		
+		} else if(command.equals("issueAll")) {
+			System.out.println("이슈 전체 보기");
+			projectService = new ProjectService();
+			projectService.issueAll(request,response);
+			
+		} else if(command.equals("issueDetail")) {
+			System.out.println("선택한 하나의 이슈의 정보 자세히");
+			projectService = new ProjectService();
+			projectService.issueDetail(request,response);
+			
+		} else if(command.equals("todo-list")) {
+			System.out.println("업무 리스트 출력");
+			// index.jsp 에서 project, id 에 세션 요구됨
+			List<TodoVo> todoList = projectService.selectAllTodo(1, "매니저 or 아이디");
+			
+			request.setAttribute("todoList", todoList);
+			dispatch("cowork/todo.jsp", request, response);
+			
+		} else if(command.equals("todoForm")) {
+			System.out.println("새 업무 생성");
+			int success = projectService.insertTodo(request, response);
+			
+			if(success>0) {
+				System.out.println("성공적으로 생성");
+				dispatch("../cowork/todo.jsp", request, response);
+			} else {
+				System.out.println("생성 오류 발생");
+			}
 			}
 			
+>>>>>>> e2841bcdb3888ce842fdd46df0968f9a55c5e756
 		}
 	
 
