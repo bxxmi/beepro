@@ -50,7 +50,7 @@ public class ProjectServlet extends HttpServlet {
 		 *	https://github.com/jaewookleeee/semi/blob/master/src/com/semi/controller/Controller.java#L44
 		 *  */
 		String command = request.getParameter("command");
-		
+		System.out.println("[ "+command+" ]" );
 		// 서비스와 연결
 		ProjectService projectService = new ProjectService();
 			if(command.equals("issueWrite")) {
@@ -87,6 +87,18 @@ public class ProjectServlet extends HttpServlet {
 				} else {
 					System.out.println("생성 오류 발생");
 				}
+			
+			} else if(command.equals("todo-detail")) {
+				System.out.println("상세 보기 페이지");
+				TodoVo detail = projectService.selectOneTodo(request, response);
+				if(detail != null) {
+					System.out.println("디테일 정보 출력");
+					request.setAttribute("detail", detail);
+					dispatch("/cowork/todoDetail.jsp", request, response);
+				}
+			} else if(command.equals("updateTodo")) {
+				System.out.println("업무 수정");
+				
 			}
 			
 		}

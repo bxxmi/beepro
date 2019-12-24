@@ -15,6 +15,7 @@ public interface ProjectDao {
     
     String insertTodoSql = "INSERT INTO TODO VALUES(TODO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'N')";
     String selectAllTodoSql = "SELECT * FROM TODO WHERE MANAGER = ? AND PROJECT_SEQ = ?";
+    String selectOneTodoSql = "SELECT * FROM TODO WHERE TODO_SEQ = ?";
     
     public List<IssueVo> selectAllIssue();
     
@@ -29,5 +30,7 @@ public interface ProjectDao {
     public int insertTodo(TodoVo todo);
 
 	public List<TodoVo> selectAllTodo(int project_seq, String manager);
+
+	public TodoVo selectOneTodo(int todoSeq);
 }
 

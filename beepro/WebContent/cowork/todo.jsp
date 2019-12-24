@@ -3,6 +3,7 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -400,7 +401,7 @@ table.table .avatar {
 									</div>
 									<div class="col-sm-9">
 										<div class="filter-group">
-											<button class="btn btn-primary" onclick="location.href='todoForm.jsp'">업무 추가</button>
+											<button class="btn btn-primary" onclick="location.href='cowork/todoForm.jsp'">업무 추가</button>
 											<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal">
 											  Launch demo modal
 											</button> -->
@@ -455,10 +456,8 @@ table.table .avatar {
 									<c:forEach var="todo" items="${todoList}" >
 									<tr>
 											
-										<td>
-											${todo.todoSeq}
-										</td>
-										<td>${todo.title }</td>
+										<td>${todo.todoSeq}</td>
+										<td><a href="/beepro/todo?command=todo-detail&seq=${todo.todoSeq}">${todo.title }</a></td>
 										<td>${todo.content }</td>
 										<td>${todo.manager }</td>
 										<td>

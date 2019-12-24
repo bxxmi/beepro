@@ -127,7 +127,7 @@ public class ProjectDaoImple implements ProjectDao {
 				todo.setPriority(rs.getInt(10));
 				todo.setFinishCk(rs.getString(11));
 				
-				System.out.println(todo.toString());
+//				System.out.println(todo.toString());
 				
 				res.add(todo);
 			}
@@ -142,5 +142,26 @@ public class ProjectDaoImple implements ProjectDao {
 		}
 		return res;
 	}	
+	// 업무 상세 페이지 정보 출력
+	@Override
+	public TodoVo selectOneTodo(int todoSeq) {
+		Connection con = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		TodoVo res = new TodoVo(); 
+		try {
+			pstm = con.prepareStatement(selectOneTodoSql);
+			pstm.setInt(1, todoSeq);
+			
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				res = new TodoVo(rs.getInt(1), rs.getInt(2), rs.getString(3) , rs.getString(4), rs.getString(5), rs.getDate(6), rs.getDate(7), rs.getString(8), rs.getString(9), rs.getInt(10), rs.getString(11));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("detail : "+res.toString());
+		return res;
+	}
 
 }

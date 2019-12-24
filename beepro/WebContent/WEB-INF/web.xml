@@ -32,7 +32,7 @@
 
 	<servlet-mapping>
 		<servlet-name>todo</servlet-name>
-		<url-pattern>/todo/*</url-pattern>
+		<url-pattern>/todo</url-pattern>
 	</servlet-mapping>
 
 	<!-- 채팅 맵핑 -->
