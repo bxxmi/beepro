@@ -10,8 +10,6 @@ DROP TABLE issue;
 DROP TABLE skill;
 DROP TABLE project_member;
 
-
-
 DROP SEQUENCE ISSUE_SEQ;
 DROP SEQUENCE PROJECT_SEQ;
 DROP SEQUENCE TODO_SEQ;
@@ -48,6 +46,14 @@ CREATE SEQUENCE TODO_SEQ
 	MINVALUE 1
 	NOCYCLE;
 
+--추가
+CREATE SEQUENCE MESSAGE_SEQ
+	START WITH 1
+	INCREMENT BY 1
+	MAXVALUE 10000
+	MINVALUE 1
+	NOCYCLE;	
+	
 CREATE TABLE beepro_user (
     user_id varchar2(100)	PRIMARY KEY,
     pwd	varchar2(100)	NOT NULL,
@@ -58,6 +64,9 @@ CREATE TABLE beepro_user (
 	email_ck	varchar2(6)	NOT NULL,
 	CONSTRAINT email_ck_chk CHECK(email_ck IN('Y','N'))
 );
+
+SELECT * FROM BEEPRO_USER
+INSERT INTO BEEPRO_USER VALUES('jimin','1111','jimin','1@d.p','1',null,'Y');
 
 --INSERT into beepro_user values('홍길동','abc123','kakung1202@naver.com', 'zzz',null, 'Y');
 --

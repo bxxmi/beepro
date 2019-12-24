@@ -304,8 +304,7 @@ button:hover {
 }
 </style>
 <body>
-
-   <!-- html -->
+	<form action="project.jsp" method="post">
    <div class="container margin-t-100">
          <!--  General -->
          <div class="form-group">
@@ -385,7 +384,7 @@ button:hover {
                   <textarea name="comments" class="floatLabel" id="comments"
                      placeholder="상세 내용을 입력하세요."></textarea>
                </div>
-               <button type="button" class="col-1-4 btn btn-primary" style="float: right;">Submit</button>
+               <input type="submit" class="col-1-4 btn btn-primary" style="float: right;"/>
             </div>
 
          </div>

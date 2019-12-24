@@ -161,7 +161,7 @@ public class UserDaoImpl extends JDBCTemplet implements UserDao {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = " INSERT INTO MESSAGE VALUE(NULL,?,?,?,SYSDATE) ";
+		String sql = " INSERT INTO MESSAGE VALUE(MESSAGE_SEQ.NEXTVAL,?,?,?,SYSDATE) ";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

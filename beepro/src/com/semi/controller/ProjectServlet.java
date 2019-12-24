@@ -40,7 +40,6 @@ public class ProjectServlet extends HttpServlet {
 		RequestDispatcher dispatch = request.getRequestDispatcher(url);
 		dispatch.forward(request, response);
 	}
-	
 	private void dual(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/**
 		 * dual method : get, post 방식으로 들어온 요청을 둘다 받는다
@@ -99,9 +98,26 @@ public class ProjectServlet extends HttpServlet {
 			} else if(command.equals("updateTodo")) {
 				System.out.println("업무 수정");
 				
-			}
+			} else if(command.equals("todo-list")) {
+			System.out.println("업무 리스트 출력");
+			// index.jsp 에서 project, id 에 세션 요구됨
+			List<TodoVo> todoList = projectService.selectAllTodo(1, "매니저 or 아이디");
 			
+			request.setAttribute("todoList", todoList);
+			dispatch("cowork/todo.jsp", request, response);
+			
+		} else if(command.equals("todoForm")) {
+			System.out.println("새 업무 생성");
+			int success = projectService.insertTodo(request, response);
+			
+			if(success>0) {
+				System.out.println("성공적으로 생성");
+				dispatch("../cowork/todo.jsp", request, response);
+			} else {
+				System.out.println("생성 오류 발생");
+			}
+
 		}
-	
+	}
 
 }
